@@ -9518,6 +9518,30 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
 ._access-icon {
   display: flex !important;
 }
+
+.index-cta-section .index-cta-btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background-color: #25D366;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-btn, 8px);
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.index-cta-section .index-cta-btn-whatsapp:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.index-cta-section .index-cta-btn-whatsapp i {
+  font-size: 1.2rem;
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
