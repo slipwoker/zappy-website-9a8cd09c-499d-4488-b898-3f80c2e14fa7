@@ -2797,7 +2797,6 @@ html[dir="rtl"] .footer-contact li > a { flex-direction: row !important; }
   opacity: 1;
 }
 
-/* Main Container */
 .index-hero-section .index-hero-container {
   position: relative;
   z-index: 10;
@@ -2807,10 +2806,12 @@ html[dir="rtl"] .footer-contact li > a { flex-direction: row !important; }
   padding: 140px 24px 40px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 32px;
+  padding-inline-start: 32px;
+  padding-inline-end: 32px;
 }
 
-/* Glassmorphism Card */
 .index-hero-section .index-hero-card {
   background: rgba(255, 255, 255, 0.09);
   backdrop-filter: blur(18px);
@@ -2818,7 +2819,7 @@ html[dir="rtl"] .footer-contact li > a { flex-direction: row !important; }
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 40px 36px;
-  max-width: 540px;
+  max-width: 400px;
   width: 100%;
   box-shadow: 0 8px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
   display: flex;
