@@ -9856,6 +9856,10 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
 .site-footer .footer-hours {
   margin-top: 20px;
 }
+
+.index-hero-section .index-hero-bg img {
+  object-position: 25% 50% !important;
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
