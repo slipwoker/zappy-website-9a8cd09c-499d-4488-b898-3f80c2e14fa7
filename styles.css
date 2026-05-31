@@ -10190,6 +10190,22 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
 .rkt-gallery-section .rkt-gallery-caption {
   display: none !important;
 }
+
+.rkt-gallery-section .rkt-gallery-caption {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+.rkt-gallery-section .rkt-gallery-caption {
+  display: none !important;
+}
+}
+
+@media (max-width: 480px) {
+.rkt-gallery-section .rkt-gallery-caption {
+  display: none !important;
+}
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
