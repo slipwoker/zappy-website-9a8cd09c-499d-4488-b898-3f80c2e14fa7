@@ -9891,6 +9891,297 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
   max-height: 458px !important;
   height: 458px !important;
 }
+
+/* AI-generated section */
+/* ===== ROCKET DELIVERY — GALLERY SECTION ===== */
+
+.rkt-gallery-section {
+  background: #f7f8fa;
+  padding: 90px 20px 80px;
+  font-family: system-ui, sans-serif;
+  direction: rtl;
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative background shape */
+.rkt-gallery-section::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(242, 106, 33, 0.07) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.rkt-gallery-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(242, 106, 33, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ===== CONTAINER ===== */
+.rkt-gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== HEADER ===== */
+.rkt-gallery-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.rkt-gallery-badge {
+  display: inline-block;
+  background: rgba(242, 106, 33, 0.1);
+  color: var(--primary, #F26A21);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 6px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(242, 106, 33, 0.25);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.rkt-gallery-title {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.25;
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+}
+
+.rkt-gallery-title span {
+  background: var(--gradient-primary, linear-gradient(135deg, #F97316 0%, #EA6A00 100%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rkt-gallery-subtitle {
+  font-size: 1.05rem;
+  color: #5a6070;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ===== GRID ===== */
+.rkt-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 52px;
+}
+
+/* ===== GALLERY ITEM ===== */
+.rkt-gallery-item {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.rkt-gallery-item:hover,
+.rkt-gallery-item:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(242, 106, 33, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.rkt-gallery-item:focus-visible {
+  outline: 3px solid var(--primary, #F26A21);
+  outline-offset: 3px;
+}
+
+/* ===== IMAGE WRAPPER ===== */
+.rkt-gallery-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.rkt-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.rkt-gallery-item:hover .rkt-gallery-img {
+  transform: scale(1.06);
+}
+
+/* ===== OVERLAY ===== */
+.rkt-gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(242, 106, 33, 0.82) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rkt-gallery-item:hover .rkt-gallery-overlay,
+.rkt-gallery-item:focus-visible .rkt-gallery-overlay {
+  opacity: 1;
+}
+
+.rkt-gallery-overlay-icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* ===== CAPTION ===== */
+.rkt-gallery-caption {
+  padding: 20px 20px 22px;
+  border-top: 3px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.rkt-gallery-item:hover .rkt-gallery-caption,
+.rkt-gallery-item:focus-visible .rkt-gallery-caption {
+  border-top-color: var(--primary, #F26A21);
+}
+
+.rkt-gallery-caption-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.rkt-gallery-caption-text {
+  font-size: 0.88rem;
+  color: #606878;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ===== CTA BUTTON ===== */
+.rkt-gallery-cta {
+  display: flex;
+  justify-content: center;
+}
+
+.rkt-gallery-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gradient-primary, linear-gradient(135deg, #F97316 0%, #EA6A00 100%));
+  color: #ffffff;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 15px 36px;
+  border-radius: 100px;
+  box-shadow: 0 4px 18px rgba(242, 106, 33, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.rkt-gallery-btn:hover,
+.rkt-gallery-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(242, 106, 33, 0.45);
+  filter: brightness(1.06);
+  outline: none;
+}
+
+.rkt-gallery-btn:focus-visible {
+  outline: 3px solid #1a1a2e;
+  outline-offset: 3px;
+}
+
+.rkt-gallery-btn-icon {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.rkt-gallery-btn:hover .rkt-gallery-btn-icon {
+  transform: translateX(-4px);
+}
+
+/* ===== RESPONSIVE — TABLET ===== */
+@media (max-width: 1024px) {
+  .rkt-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* ===== RESPONSIVE — MOBILE ===== */
+@media (max-width: 640px) {
+  .rkt-gallery-section {
+    padding: 60px 16px 56px;
+  }
+
+  .rkt-gallery-header {
+    margin-bottom: 36px;
+  }
+
+  .rkt-gallery-title {
+    font-size: 1.65rem;
+  }
+
+  .rkt-gallery-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .rkt-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .rkt-gallery-img-wrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  .rkt-gallery-overlay {
+    opacity: 1;
+  }
+
+  .rkt-gallery-caption {
+    padding: 16px 16px 18px;
+  }
+
+  .rkt-gallery-caption-title {
+    font-size: 1rem;
+  }
+
+  .rkt-gallery-btn {
+    font-size: 0.95rem;
+    padding: 14px 28px;
+  }
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
