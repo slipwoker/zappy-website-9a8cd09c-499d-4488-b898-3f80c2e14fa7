@@ -43,7 +43,7 @@ Information about WCAG compliance and accessibility features.
 - Email: rocketdeliveryil12@gmail.com
 - Phone: 0537232057
 - Phone (tel): tel:0537232057
-- Address: כל הארץ
+- Address: כל הארץ, Israel
 
 ### Contact form
 - URL: https://example.com/contact
