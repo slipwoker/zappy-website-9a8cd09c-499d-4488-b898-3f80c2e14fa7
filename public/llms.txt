@@ -1,0 +1,79 @@
+# Rocket Delivery — Generative Engine Optimization Map
+
+> Rocket Delivery is a nationwide Israeli delivery company offering fast, reliable, and professional courier services across the country. The brand identity revolves around speed, trust, and personal service — catering to both private individuals and businesses. Their fleet ranges from express motorcycles for small city deliveries to large trucks for heavy cargo, positioning them as a full-spectrum logistics solution. The visual identity is bold and energetic, using black, orange, and white to convey urgency, professionalism, and clarity.
+
+---
+
+## Pages
+
+### בית
+https://example.com
+Rocket Delivery מביאה לכם שליחויות במהירות וביעילות לכל פינה בישראל. שירות אמין, מקצועי ואישי לעסקים ולפרטיים. הזמינו עכשיו וחוו את ההבדל!
+
+### סוגי משלוחים
+https://example.com/delivery-types
+ממשלוחים אורבניים על אופנוע ועד הובלות כבדות במשאית — גלו את מגוון שירותי השליחות שלנו. שליחות אמינה לכל צורך, לכל עסק, לכל יעד בישראל. בחרו את הפתרון שלכם!
+
+### ציי רכב ותהליך
+https://example.com/fleet-process
+גלו כיצד ציי הרכבים המתקדם שלנו — מאופנועי אקספרס ועד משאיות גדולות — מבטיח שליחות בכל ישראל בזמן ובאמינות מלאה. תהליך שקוף, מהיר ומדויק מהרגע הראשון ועד המסירה.
+
+### צור קשר וגלריה
+https://example.com/contact
+רוצים לתאם שליחות אמינה במהירות? צרו איתנו קשר עכשיו ותנו לצוות Rocket Delivery לטפל בכל הפרטים. פתרונות שליחויות לעסקים ולפרטיים — בכל ישראל, כל יום, בכל שעה.
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## How to Contact Us
+
+- (No contact details configured yet.)
+
+### Contact form
+- URL: https://example.com/contact
+- Endpoint: https://example.com/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `full_name` (text, required)
+  - `phone` (tel, required)
+  - `email` (email, required)
+  - `message` (textarea, required)
+  - `privacy_consent` (checkbox, required)
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Rocket Delivery
+Rocket Delivery is a nationwide Israeli delivery company offering fast, reliable, and professional courier services across the country. The brand identity revolves around speed, trust, and personal service — catering to both private individuals and businesses. Their fleet ranges from express motorcycles for small city deliveries to large trucks for heavy cargo, positioning them as a full-spectrum logistics solution. The visual identity is bold and energetic, using black, orange, and white to convey urgency, professionalism, and clarity.
+
+## Target Audience
+- לקוחות פרטיים ועסקיים בכל רחבי הארץ
+- לקוחות פרטיים בכל הארץ
+- לקוחות עסקיים בכל הארץ
+- בעלי חנויות אונליין
+
+## Industry
+Delivery & Logistics
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://example.com/sitemap.xml
+- Robots: https://example.com/robots.txt
+- Flattened page text (for LLMs): https://example.com/llms-full.txt

@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>שליחויות — Rocket Delivery</title>
+    <meta name="description" content="Rocket Delivery מביאה לכם שליחויות במהירות וביעילות לכל פינה בישראל. שירות אמין, מקצועי ואישי לעסקים ולפרטיים. הזמינו עכשיו וחוו את ההבדל!">
+    <meta name="keywords" content="שליחויות, שליחות בכל ישראל, שליחות אמינה, שליחויות מהירות, חברת שליחויות ישראל">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '9a8cd09c-499d-4488-b898-3f80c2e14fa7',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="שליחויות — Rocket Delivery">
+    <meta property="og:description" content="Rocket Delivery מביאה לכם שליחויות במהירות וביעילות לכל פינה בישראל. שירות אמין, מקצועי ואישי לעסקים ולפרטיים. הזמינו עכשיו וחוו את ההבדל!">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="שליחויות — Rocket Delivery">
+    <meta name="twitter:description" content="Rocket Delivery מביאה לכם שליחויות במהירות וביעילות לכל פינה בישראל. שירות אמין, מקצועי ואישי לעסקים ולפרטיים. הזמינו עכשיו וחוו את ההבדל!">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script>window.ZAPPY_WEBSITE_ID = "9a8cd09c-499d-4488-b898-3f80c2e14fa7"; window.ZAPPY_API_BASE = "https://api.zappy5.com";</script>
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="[business_phone]" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site-----image-1.webp" alt="Rocket Delivery"></a>
+    </div><ul class="nav-menu" id="navMenu"><li><a href="/">בית</a></li><li><a href="/delivery-types">סוגי משלוחים</a></li><li><a href="/fleet-process">ציי רכב ותהליך</a></li></ul></div>
+
+    
+
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר וגלריה</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section data-band-index="0" class="index-hero-section" data-layout-spec="בית-hero" dir="rtl" data-hero-type="fullscreen-scrim">
+  <!-- Background Image Layer -->
+  <div class="index-hero-bg">
+    <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="index-hero-image-1" data-context="Professional Israeli delivery company hero shot: a dynamic courier on an orange-branded motorcycle speeding through a modern Israeli city street in bright daylight, motion blur on background suggesting speed, courier wearing branded uniform with Rocket Delivery branding, urban setting with Tel Aviv-style architecture, dramatic wide angle, high energy, cinematic quality, warm daylight, orange and black brand colors prominent" width="1200" height="700" src="/assets/site-index-hero-image-1.webp" alt="שליח Rocket Delivery על אופנוע בעיר">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="index-hero-scrim" aria-hidden="true"></div>
+
+  <!-- Decorative Speed Lines SVG -->
+  <svg class="index-hero-speed-lines" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 500 700" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <line x1="480" y1="80" x2="60" y2="620" stroke="#F26A21" stroke-width="1.5" stroke-opacity="0.13"></line>
+    <line x1="430" y1="40" x2="10" y2="580" stroke="#F26A21" stroke-width="1" stroke-opacity="0.09"></line>
+    <line x1="500" y1="200" x2="120" y2="700" stroke="#F26A21" stroke-width="2" stroke-opacity="0.08"></line>
+    <line x1="380" y1="0" x2="0" y2="480" stroke="#F26A21" stroke-width="1" stroke-opacity="0.07"></line>
+    <line x1="460" y1="140" x2="80" y2="660" stroke="#FF8A3D" stroke-width="1.2" stroke-opacity="0.10"></line>
+  </svg>
+
+  <!-- Main Content Container -->
+  <div class="index-hero-container">
+    <!-- Glassmorphism Content Card -->
+    <div class="index-hero-card">
+
+      <!-- Brand Label -->
+      <div class="index-hero-brand-label">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#F26A21"></path>
+        </svg>
+        <span>Rocket Delivery</span>
+      </div>
+
+      <!-- H1 -->
+      <h1 class="index-hero-h1">שליחויות מהירות ואמינות<br>לכל רחבי הארץ</h1>
+
+      <!-- H3 Subtitle -->
+      <h3 class="index-hero-subtitle">שליחים בזמינות מיידית, שירות אישי ומענה אנושי לכל סוגי המשלוחים</h3>
+
+      <!-- CTA Buttons -->
+      <div class="index-hero-ctas">
+        <a href="/contact" class="index-hero-btn-primary">
+          <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          קבלו הצעת מחיר
+        </a>
+        
+      </div>
+
+      <!-- Trust Row -->
+      <div class="index-hero-trust">
+        <div class="index-hero-trust-item">
+          <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="#F26A21" stroke-width="2"></circle>
+            <path d="M12 6v6l4 2" stroke="#F26A21" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <span>זמינות מיידית</span>
+        </div>
+        <div class="index-hero-trust-divider" aria-hidden="true"></div>
+        <div class="index-hero-trust-item">
+          <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="#F26A21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>פריסה ארצית</span>
+        </div>
+        <div class="index-hero-trust-divider" aria-hidden="true"></div>
+        <div class="index-hero-trust-item">
+          <svg data-element-type="icon" data-icon-type="svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="#F26A21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>אמינות ועמידה בזמנים</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Divider -->
+  <div class="index-hero-divider-wrapper">
+    <div class="index-hero-orange-accent-line" aria-hidden="true"></div>
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,70 L0,28 L1200,0 L1200,70 Z" fill="#FFFFFF"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section data-band-index="1" class="index-benefits-section" dir="rtl" data-layout-spec="בית-benefits">
+  <div class="index-benefits-container">
+    <!-- Intro Block -->
+    <div class="index-benefits-intro">
+      <span class="index-benefits-label">למה לבחור בנו</span>
+      <h2 class="index-benefits-heading">שש סיבות לבחור ב-Rocket Delivery</h2>
+      <p class="index-benefits-subheading">שליחויות מהירות ואמינות בכל רחבי הארץ — עם שירות אישי, צי רכבים מגוון ומחירים הוגנים שמתאימים לכל צורך.</p>
+    </div>
+
+    <!-- Benefits Grid -->
+    <div class="index-benefits-grid">
+
+      <!-- Card 1: Immediate Availability -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="16" cy="16" r="13"></circle>
+            <polyline points="16,8 16,16 21,19"></polyline>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">זמינות מיידית</h3>
+          <p class="index-benefit-desc">שליחים זמינים 24/7 לאיסוף מהיר — ללא המתנה מיותרת. אנחנו כאן ברגע שאתם צריכים אותנו.</p>
+        </div>
+      </article>
+
+      <!-- Card 2: Nationwide Coverage -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="16" cy="14" r="5"></circle>
+            <path d="M16 2C10.477 2 6 6.477 6 12c0 7 10 18 10 18s10-11 10-18c0-5.523-4.477-10-10-10z"></path>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">פריסה ארצית מלאה</h3>
+          <p class="index-benefit-desc">משלוחים לכל נקודה בישראל — מדן ועד אילת. שליחות בכל ישראל עם כיסוי מלא לכל יישוב ועיר.</p>
+        </div>
+      </article>
+
+      <!-- Card 3: Personal Human Service -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="9" r="4"></circle>
+            <path d="M26 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M19 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">שירות אישי ומענה אנושי</h3>
+          <p class="index-benefit-desc">אצלנו תמיד תדברו עם אדם אמיתי. שירות חם, אישי ומקצועי שמעמיד אתכם במרכז.</p>
+        </div>
+      </article>
+
+      <!-- Card 4: Reliability -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22l-5-5 1.5-1.5L12 19l9.5-9.5L23 11z"></path>
+            <path d="M16 2L4 7v8c0 6.627 5.373 12 12 12s12-5.373 12-12V7L16 2z"></path>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">אמינות ועמידה בזמנים</h3>
+          <p class="index-benefit-desc">שליחות אמינה שמגיעה בזמן, בכל פעם. אנחנו לא מבטיחים — אנחנו מספקים. המשלוח שלכם בידיים טובות.</p>
+        </div>
+      </article>
+
+      <!-- Card 5: Fair Pricing -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="16" y1="3" x2="16" y2="29"></line>
+            <path d="M21 7H13.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H11"></path>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">מחירים הוגנים ושקופים</h3>
+          <p class="index-benefit-desc">תמחור ברור ללא הפתעות — מחיר הוגן לכל סוג משלוח, עם הצעת מחיר מהירה ומחייבת.</p>
+        </div>
+      </article>
+
+      <!-- Card 6: Diverse Fleet -->
+      <article class="index-benefit-card">
+        <div class="index-benefit-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="1" y="11" width="20" height="13" rx="2"></rect>
+            <path d="M21 15h4l4 5v4h-8V15z"></path>
+            <circle cx="7" cy="26" r="2"></circle>
+            <circle cx="17" cy="26" r="2"></circle>
+            <circle cx="27" cy="26" r="2"></circle>
+          </svg>
+        </div>
+        <div class="index-benefit-content">
+          <h3 class="index-benefit-title">צי רכבים מגוון לכל צורך</h3>
+          <p class="index-benefit-desc">מקטנוע אקספרס לחבילות קטנות ועד משאיות לציוד כבד — הפתרון הנכון לכל גודל ולכל יעד.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Bottom SVG Divider -->
+  <div class="index-benefits-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,64 L0,32 Q150,10 300,28 T600,18 Q750,8 900,26 T1200,20 L1200,64 Z" fill="var(--bg-light)"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="2" class="index-services-section" data-layout-spec="בית-services" dir="rtl">
+  <div class="index-services-container">
+
+    <!-- Section Header -->
+    <div class="index-services-header">
+      <span class="index-services-eyebrow">השירותים שלנו</span>
+      <h2 class="index-services-title">שליחויות לכל צורך — <span class="index-services-title-accent">קטן, בינוני וגדול</span></h2>
+      <p class="index-services-subtitle">צי רכבים מגוון המותאם לכל סוג משלוח. שליחות אמינה בכל ישראל, עם מענה אנושי ומהירות שלא מתפשרת.</p>
+    </div>
+
+    <!-- Service Cards -->
+    <div class="index-services-cards">
+
+      <!-- Card 1: Small Deliveries -->
+      <article class="index-service-card">
+        <div class="index-service-card-content">
+          <div class="index-service-badge">
+            <span class="index-service-badge-number">01</span>
+            <span class="index-service-badge-label">קטנוע אקספרס</span>
+          </div>
+          <h3 class="index-service-card-title">משלוחים קטנים</h3>
+          <div class="index-service-accent-line" aria-hidden="true"></div>
+          <p class="index-service-card-desc">קטנוע אקספרס מהיר לחבילות קטנות בתוך העיר ובין ערים סמוכות. כשכל דקה חשובה — אנחנו שם תוך זמן קצר.</p>
+          <ul class="index-service-use-cases">
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>פרחים ומתנות</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>מסמכים ומעטפות</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>פריטים קטנים דחופים</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>תרופות ומוצרי בריאות</span></li>
+          </ul>
+          <a href="#contact" class="index-service-cta btn-primary">לפרטים ותיאום <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        </div>
+        <figure class="index-service-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="index-services-image-1" data-context="Israeli express motorcycle courier in orange branded gear speeding through a city street, motion blur background, Rocket Delivery branding, dynamic urban delivery scene, professional logistics photography" width="600" height="400" src="/assets/site-index-services-image-1.webp" alt="קטנוע אקספרס למשלוחים קטנים ומהירים">
+          <div class="index-service-image-overlay" aria-hidden="true"></div>
+          <div class="index-service-speed-lines" aria-hidden="true">
+            <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="60" x2="200" y2="40" stroke="#F26A21" stroke-width="2" opacity="0.18"></line>
+              <line x1="0" y1="100" x2="200" y2="75" stroke="#F26A21" stroke-width="1.5" opacity="0.12"></line>
+              <line x1="0" y1="140" x2="200" y2="115" stroke="#F26A21" stroke-width="1" opacity="0.09"></line>
+            </svg>
+          </div>
+        </figure>
+      </article>
+
+      <!-- Card 2: Medium Deliveries -->
+      <article class="index-service-card index-service-card--alt">
+        <div class="index-service-card-content">
+          <div class="index-service-badge">
+            <span class="index-service-badge-number">02</span>
+            <span class="index-service-badge-label">רכבים ווואנים</span>
+          </div>
+          <h3 class="index-service-card-title">משלוחים בינוניים</h3>
+          <div class="index-service-accent-line" aria-hidden="true"></div>
+          <p class="index-service-card-desc">רכבים פרטיים ווואנים מרווחים להובלת ציוד עסקי, מלאי וחבילות גדולות. פתרון לוגיסטי יומיומי לעסקים ולקוחות פרטיים.</p>
+          <ul class="index-service-use-cases">
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>ציוד משרדי ועסקי</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>מלאי לעסקים ולחנויות</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>חבילות גדולות ומשקל בינוני</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>הובלות יום-יומיות שוטפות</span></li>
+          </ul>
+          <a href="#contact" class="index-service-cta btn-primary">לפרטים ותיאום <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        </div>
+        <figure class="index-service-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="index-services-image-2" data-context="Professional white delivery van with Rocket Delivery orange branding parked in front of a business, driver loading packages, Israeli urban background, clean professional logistics photography" width="600" height="400" src="/assets/site-index-services-image-2.webp" alt="ואן משלוחים בינוניים לעסקים ולקוחות פרטיים">
+          <div class="index-service-image-overlay" aria-hidden="true"></div>
+          <div class="index-service-speed-lines" aria-hidden="true">
+            <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="60" x2="200" y2="40" stroke="#F26A21" stroke-width="2" opacity="0.18"></line>
+              <line x1="0" y1="100" x2="200" y2="75" stroke="#F26A21" stroke-width="1.5" opacity="0.12"></line>
+              <line x1="0" y1="140" x2="200" y2="115" stroke="#F26A21" stroke-width="1" opacity="0.09"></line>
+            </svg>
+          </div>
+        </figure>
+      </article>
+
+      <!-- Card 3: Large Deliveries (peeks over dark section below) -->
+      <article class="index-service-card index-service-card--large">
+        <div class="index-service-card-content">
+          <div class="index-service-badge">
+            <span class="index-service-badge-number">03</span>
+            <span class="index-service-badge-label">משאיות מקצועיות</span>
+          </div>
+          <h3 class="index-service-card-title">משלוחים גדולים</h3>
+          <div class="index-service-accent-line" aria-hidden="true"></div>
+          <p class="index-service-card-desc">משאיות מקצועיות להובלות כבדות ומורכבות בכל רחבי הארץ. מקצה לקצה — עם אמינות, דיוק ושירות אישי לאורך כל הדרך.</p>
+          <ul class="index-service-use-cases">
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>ריהוט ומוצרי בית</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>משטחים וציוד כבד</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>הובלות בין-עירוניות</span></li>
+            <li><i class="fa fa-check" aria-hidden="true"></i><span>לוגיסטיקה מקצה לקצה</span></li>
+          </ul>
+          <a href="#contact" class="index-service-cta btn-primary">לפרטים ותיאום <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        </div>
+        <figure class="index-service-card-image-wrap">
+          <img loading="lazy" decoding="async" data-placeholder="index-services-image-3" data-context="Large professional logistics truck with Rocket Delivery orange and black branding on a highway in Israel, clear sky, professional transport photography, heavy cargo logistics" width="600" height="400" src="/assets/site-index-services-image-3.webp" alt="משאית מקצועית להובלות גדולות וכבדות בכל ישראל">
+          <div class="index-service-image-overlay" aria-hidden="true"></div>
+          <div class="index-service-speed-lines" aria-hidden="true">
+            <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="60" x2="200" y2="40" stroke="#F26A21" stroke-width="2" opacity="0.18"></line>
+              <line x1="0" y1="100" x2="200" y2="75" stroke="#F26A21" stroke-width="1.5" opacity="0.12"></line>
+              <line x1="0" y1="140" x2="200" y2="115" stroke="#F26A21" stroke-width="1" opacity="0.09"></line>
+            </svg>
+          </div>
+        </figure>
+      </article>
+
+    </div><!-- end .index-services-cards -->
+  </div><!-- end .index-services-container -->
+
+  <!-- Bottom overlap: dark charcoal strip behind the last card -->
+  <div class="index-services-dark-overlap" aria-hidden="true"></div>
+
+</section>
+
+<section data-band-index="3" class="index-testimonials-section" data-layout-spec="בית-testimonials" dir="rtl">
+  <div class="index-testimonials-container">
+    <div class="index-testimonials-header">
+      <span class="index-testimonials-label">לקוחות מרוצים</span>
+      <h2 class="index-testimonials-title">מה הלקוחות שלנו אומרים</h2>
+      <p class="index-testimonials-subtitle">אלפי לקוחות פרטיים ועסקיים סומכים על Rocket Delivery לשליחות מהירה ואמינה בכל רחבי הארץ</p>
+    </div>
+    <div class="index-testimonials-grid">
+      <!-- Card 1 -->
+      <article class="index-testimonial-card index-testimonial-card--tall">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">קיבלתי את החבילה תוך שעה וחצי מרגע ההזמנה. שירות מדהים, השליח היה מקצועי ואדיב. בפעם הראשונה שאני מרגיש שחברת שליחויות באמת עומדת בהבטחות שלה.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">ד</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">דוד כהן</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--private">לקוח פרטי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+      <!-- Card 2 -->
+      <article class="index-testimonial-card">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">אנחנו עובדים עם Rocket Delivery כבר שנה וחצי לאספקת מלאי לסניפים שלנו. תמיד בזמן, תמיד מסודר. השירות העסקי שלהם הוא ברמה אחרת לגמרי.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">מ</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">מיכל לוי</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--business">לקוח עסקי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+      <!-- Card 3 -->
+      <article class="index-testimonial-card index-testimonial-card--tall">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">שלחתי מסמכים דחופים מתל אביב לחיפה ותוך שלוש שעות הם כבר היו ביעד. המענה האנושי בטלפון נתן לי ביטחון מלא. שליחות אמינה בכל ישראל — זה בדיוק מה שחיפשתי.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">א</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">אריאל שפירא</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--private">לקוח פרטי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+      <!-- Card 4 -->
+      <article class="index-testimonial-card">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">הובלנו ציוד משרדי כבד לאתר בנייה בבאר שבע. המשאית הגיעה בדיוק בשעה שנקבעה, הצוות היה מקצועי ויעיל. ממליץ בחום לכל עסק שמחפש שליחויות במהירות.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">ר</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">רונן אברהם</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--business">לקוח עסקי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+      <!-- Card 5 -->
+      <article class="index-testimonial-card">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">הזמנתי משלוח של פרחים ליום הולדת — הגיעו טריים ובזמן מושלם. הקטנוע האקספרס הוא פתרון מעולה לפרחים ומתנות. שירות אישי שמרגיש אמיתי.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">נ</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">נועה גרינברג</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--private">לקוח פרטי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+      <!-- Card 6 -->
+      <article class="index-testimonial-card index-testimonial-card--tall">
+        <div class="index-testimonial-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="index-testimonial-text">ניהלנו אירוע גדול ונזקקנו להפצה של חומרים לעשרה אתרים שונים בו-זמנית. Rocket Delivery תיאמו הכל בצורה מדהימה. מחיר הוגן, שקיפות מלאה ואפס הפתעות לא נעימות.</blockquote>
+        <footer class="index-testimonial-footer">
+          <div class="index-testimonial-avatar" aria-hidden="true">ש</div>
+          <div class="index-testimonial-info">
+            <cite class="index-testimonial-name">שירה מזרחי</cite>
+            <span class="index-testimonial-badge index-testimonial-badge--business">לקוח עסקי</span>
+          </div>
+          <div class="index-testimonial-stars" aria-label="5 כוכבים">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </footer>
+      </article>
+    </div>
+    <!-- Trust bar -->
+    <div class="index-testimonials-trust-bar">
+      <div class="index-testimonials-trust-item">
+        <span class="index-testimonials-trust-number">4.9</span>
+        <span class="index-testimonials-trust-label">דירוג ממוצע</span>
+      </div>
+      <div class="index-testimonials-trust-divider" aria-hidden="true"></div>
+      <div class="index-testimonials-trust-item">
+        <span class="index-testimonials-trust-number">12,000+</span>
+        <span class="index-testimonials-trust-label">משלוחים בחודש</span>
+      </div>
+      <div class="index-testimonials-trust-divider" aria-hidden="true"></div>
+      <div class="index-testimonials-trust-item">
+        <span class="index-testimonials-trust-number">98%</span>
+        <span class="index-testimonials-trust-label">שביעות רצון</span>
+      </div>
+      <div class="index-testimonials-trust-divider" aria-hidden="true"></div>
+      <div class="index-testimonials-trust-item">
+        <span class="index-testimonials-trust-number">6 שנים</span>
+        <span class="index-testimonials-trust-label">ניסיון בתחום</span>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom angled divider to bright CTA section -->
+  <div class="index-testimonials-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,72 1440,0 1440,72" fill="var(--bg-light)"></polygon>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="4" class="index-cta-section" data-layout-spec="בית-cta" dir="rtl">
+  <div class="index-cta-glow" aria-hidden="true"></div>
+  <div class="index-cta-container">
+    <div class="index-cta-content">
+      <h2 class="index-cta-heading">צריכים משלוח עכשיו?<br><span class="index-cta-heading-accent">אנחנו כאן בשבילכם — מהר ואמין</span></h2>
+      <p class="index-cta-desc">Rocket Delivery מספקת שירות שליחויות מקצועי בכל רחבי הארץ, בזמינות מיידית ועם מענה אנושי אמיתי. קבלו הצעת מחיר תוך דקות או פנו אלינו ישירות בוואטסאפ.</p>
+      <div class="index-cta-buttons">
+        <a href="/contact" class="index-cta-btn-primary">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          קבלו הצעת מחיר
+        </a>
+        
+      </div>
+      <p class="index-cta-reassurance">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+        זמינות ארצית 24/7 &nbsp;·&nbsp;
+        <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+        מענה מהיר תוך דקות &nbsp;·&nbsp;
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        שירות אמין ומקצועי
+      </p>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl" aria-label="כותרת תחתית של האתר">
+  <div class="footer-main">
+    <div class="footer-container">
+
+      <!-- Company Info -->
+      <div class="footer-col footer-brand">
+        <img src="/assets/rocket-delivery-delivery-logistics-logo.webp" alt="Rocket Delivery" class="logo">
+        <p class="footer-tagline">מהירות, אמינות ומקצועיות — <br>משלוחים שמגיעים בזמן, תמיד.</p>
+        <div class="footer-badges">
+          <span class="badge"><i class="fas fa-bolt"></i> משלוח מהיר</span>
+          <span class="badge"><i class="fas fa-headset"></i> תמיכה 24/7</span>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col footer-links">
+        <h3 class="footer-heading">ניווט מהיר</h3>
+        <ul class="footer-nav">
+          <li><a href="/">בית</a></li>
+          <li><a href="/delivery-types">סוגי משלוחים</a></li>
+          <li><a href="/fleet-process">ציי רכב ותהליך</a></li>
+          <li><a href="/contact">צור קשר וגלריה</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-col footer-contact-col">
+        <h3 class="footer-heading">יצירת קשר</h3>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+
+        <div class="footer-hours">
+          <h4 class="hours-heading"><i class="fas fa-clock"></i> שעות פעילות</h4>
+          <ul class="hours-list">
+            <li><a href="/"><span>ראשון – חמישי</span><span>08:00 – 20:00</span></a></li>
+            <li><a href="/"><span>שישי</span><span>08:00 – 14:00</span></a></li>
+            <li><a href="/"><span>שבת</span><span class="closed">סגור</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-col footer-social-col">
+        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <div class="social-icons">
+          
+          
+          
+        </div>
+        <div class="footer-cta-block">
+          <p class="cta-text">רוצים לדעת יותר על השירותים שלנו?</p>
+          <a href="/contact" class="footer-cta-btn">דברו איתנו</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="footer-container footer-bottom-inner">
+      <p class="footer-copyright">© 2026 Rocket Delivery. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="legal-sep">|</span>
+        <a href="/terms">תנאי שימוש</a>
+        <span class="legal-sep">|</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="legal-sep">|</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
