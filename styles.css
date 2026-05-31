@@ -10182,6 +10182,10 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
     padding: 14px 28px;
   }
 }
+
+.rkt-gallery-section .rkt-gallery-overlay-icon {
+  display: none !important;
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
