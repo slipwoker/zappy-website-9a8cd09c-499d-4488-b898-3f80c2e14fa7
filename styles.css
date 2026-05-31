@@ -2807,7 +2807,7 @@ html[dir="rtl"] .footer-contact li > a { flex-direction: row !important; }
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: 32px;
+  padding-top: 80px;
   padding-inline-start: 32px;
   padding-inline-end: 32px;
 }
