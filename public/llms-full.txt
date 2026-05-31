@@ -217,7 +217,7 @@ Rocket Delivery
 
 
 
-טקסט כאן
+🔬
 
 
 
@@ -232,7 +232,7 @@ Rocket Delivery
 
 
 
-טקסט כאן
+🏗️
 
 
 
@@ -247,7 +247,7 @@ Rocket Delivery
 
 
 
-טקסט כאן
+🔧
 
 
 
@@ -262,7 +262,7 @@ Rocket Delivery
 
 
 
-טקסט כאן
+🛠️
 
 
 
