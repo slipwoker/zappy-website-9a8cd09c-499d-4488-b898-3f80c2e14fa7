@@ -676,7 +676,7 @@ Rocket Delivery מספקת שירות שליחויות מקצועי בכל רח�
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -1557,7 +1557,7 @@ Rocket Delivery מציעה מגוון שלם של פתרונות שליחות א
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -2279,7 +2279,7 @@ Rocket Delivery מספקת שירותי שליחות אמינה לאורך כל 
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -2733,7 +2733,7 @@ Description: רוצים לתאם שליחות אמינה במהירות? צרו 
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -2952,7 +2952,7 @@ Rocket Delivery ("החברה", "אנו", "שלנו") מחויבת להגן על 
 
 - אימייל: [business_email]
 
-- טלפון: [business_phone]
+- טלפון: 0537232057
 
 - כתובת: [business_address]
 
@@ -3008,7 +3008,7 @@ Rocket Delivery ("החברה", "אנו", "שלנו") מחויבת להגן על 
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -3235,7 +3235,7 @@ Rocket Delivery מחויבת להנגיש את השירותים לכלל הצי�
 
 - אימייל: [business_email]
 
-- טלפון: [business_phone]
+- טלפון: 0537232057
 
 
 
@@ -3292,7 +3292,7 @@ Rocket Delivery מחויבת להנגיש את השירותים לכלל הצי�
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
@@ -3542,7 +3542,7 @@ Rocket Delivery מספקת Delivery & Logistics דרך האתר. השירותי�
 
 - אימייל: [business_email]
 
-- טלפון: [business_phone]
+- טלפון: 0537232057
 
 - כתובת: [business_address]
 
@@ -3595,7 +3595,7 @@ Rocket Delivery מספקת Delivery & Logistics דרך האתר. השירותי�
 
 - [business_email]
 
-- [business_phone]
+- 0537232057
 
 - [business_address]
 
