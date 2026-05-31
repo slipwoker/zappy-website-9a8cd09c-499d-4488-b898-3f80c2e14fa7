@@ -9852,6 +9852,10 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
     max-width: 280px;
   }
 }
+
+.site-footer .footer-hours {
+  margin-top: 20px;
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
