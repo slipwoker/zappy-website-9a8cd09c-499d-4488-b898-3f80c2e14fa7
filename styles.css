@@ -9860,6 +9860,16 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
 .index-hero-section .index-hero-bg img {
   object-position: 25% 50% !important;
 }
+
+.index-services-section .index-service-card:first-child .index-service-card-image-wrap {
+  max-height: 458px;
+  height: 458px;
+}
+
+.index-services-section .index-service-card:first-child .index-service-card-image-wrap > div[data-zappy-zoom-wrapper] {
+  max-height: 458px !important;
+  height: 458px !important;
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
