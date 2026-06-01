@@ -7,33 +7,33 @@
 ## Pages
 
 ### בית
-https://rocket-delivery.zappy5.app
+https://rocket-delivery.co.il
 Rocket Delivery מביאה לכם שליחויות במהירות וביעילות לכל פינה בישראל. שירות אמין, מקצועי ואישי לעסקים ולפרטיים. הזמינו עכשיו וחוו את ההבדל!
 
 ### סוגי משלוחים
-https://rocket-delivery.zappy5.app/delivery-types
+https://rocket-delivery.co.il/delivery-types
 ממשלוחים אורבניים על אופנוע ועד הובלות כבדות במשאית — גלו את מגוון שירותי השליחות שלנו. שליחות אמינה לכל צורך, לכל עסק, לכל יעד בישראל. בחרו את הפתרון שלכם!
 
 ### ציי רכב ותהליך
-https://rocket-delivery.zappy5.app/fleet-process
+https://rocket-delivery.co.il/fleet-process
 גלו כיצד ציי הרכבים המתקדם שלנו — מאופנועי אקספרס ועד משאיות גדולות — מבטיח שליחות בכל ישראל בזמן ובאמינות מלאה. תהליך שקוף, מהיר ומדויק מהרגע הראשון ועד המסירה.
 
 ### צור קשר וגלריה
-https://rocket-delivery.zappy5.app/contact
+https://rocket-delivery.co.il/contact
 רוצים לתאם שליחות אמינה במהירות? צרו איתנו קשר עכשיו ותנו לצוות Rocket Delivery לטפל בכל הפרטים. פתרונות שליחויות לעסקים ולפרטיים — בכל ישראל, כל יום, בכל שעה.
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://rocket-delivery.zappy5.app/privacy
+https://rocket-delivery.co.il/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://rocket-delivery.zappy5.app/terms
+https://rocket-delivery.co.il/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://rocket-delivery.zappy5.app/accessibility
+https://rocket-delivery.co.il/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
@@ -43,11 +43,11 @@ Information about WCAG compliance and accessibility features.
 - Email: rocketdeliveryil12@gmail.com
 - Phone: 0537232057
 - Phone (tel): tel:0537232057
-- Address: כל הארץ, Israel
+- Address: כל הארץ, ראשון לציון, מרכז, 7564047, Israel
 
 ### Contact form
-- URL: https://rocket-delivery.zappy5.app/contact
-- Endpoint: https://rocket-delivery.zappy5.app/api/email/contact-form
+- URL: https://rocket-delivery.co.il/contact
+- Endpoint: https://rocket-delivery.co.il/api/email/contact-form
 - Method: POST
 - Content-Type: application/json
 - Fields:
@@ -77,6 +77,6 @@ Delivery & Logistics
 
 # Machine-readable feeds
 
-- Sitemap (XML): https://rocket-delivery.zappy5.app/sitemap.xml
-- Robots: https://rocket-delivery.zappy5.app/robots.txt
-- Flattened page text (for LLMs): https://rocket-delivery.zappy5.app/llms-full.txt
+- Sitemap (XML): https://rocket-delivery.co.il/sitemap.xml
+- Robots: https://rocket-delivery.co.il/robots.txt
+- Flattened page text (for LLMs): https://rocket-delivery.co.il/llms-full.txt

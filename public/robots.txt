@@ -50,4 +50,4 @@ Allow: /
 User-agent: MistralAI-User
 Allow: /
 
-Sitemap: https://rocket-delivery.zappy5.app/sitemap.xml
+Sitemap: https://rocket-delivery.co.il/sitemap.xml
