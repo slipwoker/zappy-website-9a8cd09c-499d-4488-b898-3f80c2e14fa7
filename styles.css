@@ -10269,6 +10269,34 @@ div[id*="mic-access-tool-box"] button[class*="reset"] * {
   opacity: 1 !important;
 }
 }
+
+.rkt-gallery-section .rkt-gallery-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+@media (max-width: 768px) {
+.rkt-gallery-section .rkt-gallery-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 14px !important;
+}
+
+.rkt-gallery-section .rkt-gallery-caption {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding: 12px 12px 14px !important;
+}
+
+.rkt-gallery-section .rkt-gallery-caption-title {
+  font-size: 0.88rem !important;
+  margin: 0 0 5px !important;
+}
+
+.rkt-gallery-section .rkt-gallery-caption-text {
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+}
+}
 /* mobile-submenu-overflow-fix */
 @media (max-width: 768px) {
   .navbar .sub-menu.mobile-expanded,
