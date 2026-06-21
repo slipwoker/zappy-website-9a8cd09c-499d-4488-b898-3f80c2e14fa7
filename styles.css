@@ -10524,7 +10524,7 @@ nav .sub-menu.zappy-empty-submenu,
   section[data-hero-type*="fullscreen"] {
     height: auto !important;
     min-height: 100svh !important;
-    padding: 0 0 90px 0 !important;
+    padding: 0 clamp(1rem, 5vw, 1.5rem) 90px !important;
   }
   section[data-hero-type*="fullscreen"] > [class*="-container"]:not([class*="bg"]):not([class*="scrim"]):not([class*="divider"]),
   section[data-hero-type*="fullscreen"] > .container {
@@ -10945,7 +10945,7 @@ nav .sub-menu.zappy-empty-submenu,
   section[data-hero-type*="fullscreen"] {
     height: auto !important;
     min-height: 100svh !important;
-    padding: 0 0 90px 0 !important;
+    padding: 0 clamp(1rem, 5vw, 1.5rem) 90px !important;
   }
   section[data-hero-type*="fullscreen"] > [class*="-container"]:not([class*="bg"]):not([class*="scrim"]):not([class*="divider"]),
   section[data-hero-type*="fullscreen"] > .container {
@@ -11218,6 +11218,13 @@ html[dir="ltr"] .solution-item.solution-reverse .solution-image { order: -1 !imp
 html[dir="ltr"] .solution-item.solution-reverse .solution-content { order: 1 !important; }
 html[dir="ltr"] .service-detail.service-reverse .service-detail-image { order: -1 !important; }
 html[dir="ltr"] .service-detail.service-reverse .service-detail-content { order: 1 !important; }
+
+/* ENSURE: navbar-logo-isolation */
+.navbar .logo,
+.nav-brand .logo,
+.logo-link .logo {
+  margin: 0 !important;
+}
 
 
 /* ZAPPY_MOBILE_NAV_ICON_ALIGNMENT_FIX */
